@@ -1,0 +1,112 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ZoneService zoneService = new ZoneService();
+        BienService bienService = new BienService();
+
+        int choix;
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Créer une Zone");
+            System.out.println("2. Lister les Zones");
+            System.out.println("3. Ajouter un bien et lui associer une zone");
+            System.out.println("4. Lister les biens en affichant le nom de la zone");
+            System.out.println("5. Quitter");
+            System.out.print("Votre choix: ");
+            choix = scanner.nextInt();
+
+            switch (choix) {
+                case 1:
+                    System.out.print("Nom de la zone à créer: ");
+                    String nomZone = scanner.next();
+                    Zone zone = new Zone(nomZone);
+                    zoneService.creerZone(zone);
+                    break;
+                case 2:
+                    zoneService.listerZones();
+                    break;
+                case 3:
+                    System.out.print("Référence du bien: ");
+                    int reference = scanner.nextInt();
+                    System.out.print("Description du bien: ");
+                    String description = scanner.next();
+                    System.out.print("Prix du bien: ");
+                    double prix = scanner.nextDouble();
+                    System.out.print("Date de création du bien: ");
+                    String dateCreation = scanner.next();
+                    Bien bien = new Bien(reference, description, prix, dateCreation);
+
+                    System.out.print("ID de la zone à associer au bien: ");
+                    int idZone = scanner.nextInt();
+                    bienService.ajouterBienAZone(bien, idZone);
+                    break;
+                case 4:
+                    bienService.listerBiensAvecZones();
+                    break;
+                case 5:
+                    System.out.println("Au revoir !");
+                    break;
+                default:
+                    System.out.println("Choix invalide. Veuillez choisir une option valide.");
+                    break;
+            }
+        } while (choix != 5);
+    }
+}
+
+class Zone {
+    private int id;
+    private String nom;
+
+    public Zone(String nom) {
+        this.nom = nom;
+    }
+
+    
+}
+
+class Bien {
+    private int id;
+    private int reference;
+    private String description;
+    private double prix;
+    private String dateCreation;
+    private int idZone;
+
+    public Bien(int reference, String description, double prix, String dateCreation) {
+        this.reference = reference;
+        this.description = description;
+        this.prix = prix;
+        this.dateCreation = dateCreation;
+    }
+
+  
+}
+
+class ZoneService {
+    public void creerZone(Zone zone) {
+        
+        System.out.println("Zone créée avec succès: " + zone.getNom());
+    }
+
+    public void listerZones() {
+        
+        System.out.println("Liste des zones:");
+        
+    }
+}
+
+class BienService {
+    public void ajouterBienAZone(Bien bien, int idZone) {
+        
+        System.out.println("Bien ajouté avec succès à la zone avec l'ID: " + idZone);
+    }
+
+    public void listerBiensAvecZones() {
+        
+        System.out.println("Liste des biens avec les noms des zones associées:");
+        
+    }
+}
