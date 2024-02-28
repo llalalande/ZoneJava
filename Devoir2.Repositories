@@ -1,0 +1,13 @@
+import java.util.List;
+
+public interface ClientRepository {
+    void ajouterClient(Client client);
+    List<Client> listerClients();
+}
+
+import java.util.List;
+
+public interface AdresseRepository {
+    void ajouterAdresse(Adresse adresse);
+    List<Adresse> listerAdresses();
+}
