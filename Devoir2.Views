@@ -1,0 +1,88 @@
+import java.util.Scanner;
+
+public class MenuView {
+    private Scanner scanner;
+    private ClientService clientService;
+    private AdresseService adresseService;
+
+    public MenuView(Scanner scanner, ClientService clientService, AdresseService adresseService) {
+        this.scanner = scanner;
+        this.clientService = clientService;
+        this.adresseService = adresseService;
+    }
+
+    public void afficherMenu() {
+        System.out.println("Menu :");
+        System.out.println("1. Créer un Client");
+        System.out.println("2. Lister les Clients");
+        System.out.println("3. Ajouter une adresse et lui associer un client");
+        System.out.println("4. Lister les adresses en affichant le nom du client");
+        System.out.println("5. Quitter");
+        System.out.print("Choix : ");
+    }
+
+    public void gererChoixUtilisateur() {
+        int choix = scanner.nextInt();
+        switch (choix) {
+            case 1:
+                creerClient();
+                break;
+            case 2:
+                listerClients();
+                break;
+            case 3:
+                ajouterAdresse();
+                break;
+            case 4:
+                listerAdresses();
+                break;
+            case 5:
+                System.out.println("Au revoir!");
+                System.exit(0);
+            default:
+                System.out.println("Choix invalide.");
+        }
+    }
+
+    private void creerClient() {
+        System.out.print("Nom du client : ");
+        String nom = scanner.next();
+        System.out.print("Prénom du client : ");
+        String prenom = scanner.next();
+        clientService.creerClient(nom, prenom);
+        System.out.println("Client créé avec succès.");
+    }
+
+    private void listerClients() {
+        List<Client> clients = clientService.listerClients();
+        System.out.println("Liste des clients :");
+        for (Client client : clients) {
+            System.out.println(client.getNom() + " " + client.getPrenom());
+        }
+    }
+
+    private void ajouterAdresse() {
+        System.out.print("Rue : ");
+        String rue = scanner.next();
+        System.out.print("Ville : ");
+        String ville = scanner.next();
+        System.out.print("Code postal : ");
+        String codePostal = scanner.next();
+        System.out.print("Nom du client : ");
+        String nomClient = scanner.next();
+        System.out.print("Prénom du client : ");
+        String prenomClient = scanner.next();
+        Client client = new Client(nomClient, prenomClient);
+        adresseService.ajouterAdresse(rue, ville, codePostal, client);
+        System.out.println("Adresse ajoutée avec succès.");
+    }
+
+    private void listerAdresses() {
+        List<Adresse> adresses = adresseService.listerAdresses();
+        System.out.println("Liste des adresses :");
+        for (Adresse adresse : adresses) {
+            System.out.println(adresse.getRue() + ", " + adresse.getVille() + ", " + adresse.getCodePostal() +
+                    " - Client: " + adresse.getClient().getNom() + " " + adresse.getClient().getPrenom());
+        }
+    }
+}
