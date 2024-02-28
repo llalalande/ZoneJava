@@ -1,0 +1,13 @@
+import java.util.List;
+
+public interface ClientService {
+    void creerClient(String nom, String prenom);
+    List<Client> listerClients();
+}
+
+import java.util.List;
+
+public interface AdresseService {
+    void ajouterAdresse(String rue, String ville, String codePostal, Client client);
+    List<Adresse> listerAdresses();
+}
